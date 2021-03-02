@@ -3,9 +3,11 @@ import Table from './Table'
 import PieChart from './PieChart'
 
 interface Istate {
-  min: string, 
-  max: string, 
-  trg: string, 
+  formFields: {
+    minimum: string, 
+    maximum: string, 
+    target: string
+  },
   userInteraction: boolean, 
   btnDisabled: boolean, 
   mount: boolean
@@ -14,9 +16,11 @@ class Form extends Component<{}, Istate> {
   constructor(props: any) {
     super(props) 
     this.state = {
-      min: '', 
-			max: '', 
-      trg: '', 
+      formFields: {
+        minimum: '', 
+        maximum: '', 
+        target: ''
+      },
       userInteraction: false, 
 			btnDisabled: false, 
       mount: true 
@@ -26,9 +30,13 @@ class Form extends Component<{}, Istate> {
   unmountCounter = () => this.setState({mount:false})
   private formFunc = ():any => {
     let form
+    let formFields = Object.keys(this.state.formFields) // arrOfKeys 
     form = 
       <div>
         <form>
+          {formFields.map( formField => {
+            return <label>{formField[0].toUpperCase() + formField.slice(1)}</label>
+          })}
         </form>
       </div>
     return form 
@@ -39,7 +47,7 @@ class Form extends Component<{}, Istate> {
       <div>
         <button onClick={this.mountCounter} disabled={this.state.mount}>Mount</button>
         <button onClick={this.unmountCounter} disabled={!this.state.mount}>unmount</button>
-        <h1>hello</h1>
+        <h1>form</h1>
         {this.formFunc()}
         {this.state.mount ? <Table />: null }
         {this.state.mount ? <PieChart />: null }
