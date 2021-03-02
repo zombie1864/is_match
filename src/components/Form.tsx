@@ -28,12 +28,13 @@ class Form extends Component<{}, Istate> {
     let form
     form = 
       <div>
-        <h1>Hell yea!</h1>
+        <form>
+        </form>
       </div>
     return form 
   }
   public render():JSX.Element {
-    
+
     return (
       <div>
         <button onClick={this.mountCounter} disabled={this.state.mount}>Mount</button>
