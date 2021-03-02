@@ -21,8 +21,8 @@ class Form extends Component<{}, Istate> {
         maximum: '', 
         target: ''
       },
-      userInteraction: false, 
-			btnDisabled: false, 
+      userInteraction: false, // might not be needed
+			btnDisabled: false, // might not be needed
       mount: false 
     }
   }
