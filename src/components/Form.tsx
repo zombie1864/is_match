@@ -29,17 +29,17 @@ class Form extends Component<{}, Istate> {
   mountCounter = () => this.setState({mount:true})
   unmountCounter = () => this.setState({mount:false})
   private formFunc = ():any => {
-    let form
+    let formContainer
     let formFields = Object.keys(this.state.formFields) // arrOfKeys 
-    form = 
+    formContainer = 
       <div>
         <form>
           {formFields.map( formField => {
-            return <label>{formField[0].toUpperCase() + formField.slice(1)}</label>
+            return <label key={formField}>{formField[0].toUpperCase() + formField.slice(1)}<input type="text"/></label>
           })}
         </form>
       </div>
-    return form 
+    return formContainer 
   }
   public render():JSX.Element {
 
