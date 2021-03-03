@@ -81,12 +81,21 @@ class Form extends Component<{}, Istate> {
     console.log(this.state);
     return (
       <div>
-        <h1>form</h1>
-        {this.formFunc()}
         {this.state.renderTimedErrMsg ? this.renderErr() : null }
         {this.state.renderUntimedErrMsg ? this.renderErr() : null }
-        {this.state.mount ? <Table />: null }
-        {this.state.mount ? <PieChart />: null }
+        {this.formFunc()}
+        <table>
+          <tbody>
+            <tr>
+              <th style={ {border: '1px solid black'} }>
+                {this.state.mount ? <Table />: 'No Data' }
+              </th>
+              <th style={ {border: '1px solid black'} }>
+                {this.state.mount ? <PieChart />: null }
+              </th>
+            </tr>
+          </tbody>
+        </table>
       </div>
     )
   }
