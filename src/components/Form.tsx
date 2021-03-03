@@ -42,12 +42,23 @@ class Form extends Component<{}, Istate> {
         this.setState( newState )
         break;
       default:
+        this.unmountComp()
         this.setState( { renderTimedErrMsg: true } )
         break;
     }
   }
   private renderTimedErr = ():any => {
-    return <p>Err</p>
+    return <p>Please type a number</p>
+  }
+
+  private setTimer = ():void => {
+    setTimeout( () => {
+      this.setState( { renderTimedErrMsg: false } )
+    }, 1500)
+  }
+
+  public componentDidUpdate(prevProps:any, prevState:any) {
+    return prevState.renderTimedErrMsg !== this.state.renderTimedErrMsg ? this.setTimer() : null
   }
 
   private formFunc = ():any => { // the value={ ... } not modular enough do research into this 
