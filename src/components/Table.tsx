@@ -11,8 +11,10 @@ interface Istate {
 }
 
 class Table extends Component<{formFields:Iprops}, Istate> {
+    
     constructor(props: any) {
         super(props) 
+        console.log('table: init state')
         this.state = {
             attempts: 0 
         }
@@ -45,6 +47,7 @@ class Table extends Component<{formFields:Iprops}, Istate> {
         return table 
     }
     render() {
+        console.log('table: render');
         return (
             <div>
                 {this.tableGenerator()}
