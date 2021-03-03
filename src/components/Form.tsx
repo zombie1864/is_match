@@ -87,12 +87,12 @@ class Form extends Component<{}, Istate> {
         <table>
           <tbody>
             <tr>
-              <th style={ {border: '1px solid black'} }>
-                {this.state.mount ? <Table />: 'No Data' }
-              </th>
-              <th style={ {border: '1px solid black'} }>
+              <td style={ {border: '1px solid black'} }>
+                {this.state.mount ? <Table formFields={this.state.formFields}/>: 'No Data' }
+              </td>
+              <td style={ {border: '1px solid black'} }>
                 {this.state.mount ? <PieChart />: null }
-              </th>
+              </td>
             </tr>
           </tbody>
         </table>
