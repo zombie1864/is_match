@@ -71,9 +71,10 @@ class Form extends Component<{}, Istate> {
                 <input type="text" placeholder='0' onChange={this.onChange} name={formField} value={ idx === 0 ? this.state.formFields.minimum : idx === 1 ? this.state.formFields.maximum : this.state.formFields.target }/>
               </label>
           })}
+          <button type="button" onClick={this.mountComp} disabled={this.state.mount}>Run Target</button>
         </form>
       </div>
-    return formContainer 
+    return formContainer
   }
 
   public render():JSX.Element {
@@ -84,7 +85,6 @@ class Form extends Component<{}, Istate> {
         {this.formFunc()}
         {this.state.renderTimedErrMsg ? this.renderErr() : null }
         {this.state.renderUntimedErrMsg ? this.renderErr() : null }
-        <button onClick={this.mountComp} disabled={this.state.mount}>Run Target</button>
         {this.state.mount ? <Table />: null }
         {this.state.mount ? <PieChart />: null }
       </div>
