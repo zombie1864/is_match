@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Table from './Table'
 import PieChart from './PieChart'
-import { isNumValidator } from './validators'
+import { isNumValidator, formFieldsValidator } from './validators'
 
 interface Istate {
   formFields: {
@@ -10,6 +10,7 @@ interface Istate {
     target: string
   }, 
   renderTimedErrMsg: boolean, 
+  renderUntimedErrMsg: boolean, 
   mount: boolean
 }
 class Form extends Component<{}, Istate> {
@@ -22,17 +23,19 @@ class Form extends Component<{}, Istate> {
         target: ''
       },
       renderTimedErrMsg: false, 
+      renderUntimedErrMsg: false, 
       mount: false 
     }
   }
 
-  private mountComp = () => formFieldsValidator(this.state.formFields) ? this.setState({mount:true}) : console.log('no');
+  private mountComp = () => formFieldsValidator(this.state.formFields) ? this.setState({mount:true}) : this.setState({renderUntimedErrMsg:true});
   private unmountComp = () => this.setState({mount:false})
 
   private onChange = (event:any):void => {
     switch ( isNumValidator(event.target.value) ) {
       case true:
         this.unmountComp()
+        this.setState({ renderUntimedErrMsg: false })
         const newState = { formFields: { ...this.state.formFields, [event.target.name]: (event.target.value) } } as Istate; // look into why the spreed op works 
         this.setState( newState )
         break;
@@ -42,7 +45,7 @@ class Form extends Component<{}, Istate> {
         break;
     }
   }
-  private renderTimedErr = ():any => {
+  private renderErr = ():any => {
     return <p>Please type a number</p>
   }
 
@@ -79,7 +82,8 @@ class Form extends Component<{}, Istate> {
       <div>
         <h1>form</h1>
         {this.formFunc()}
-        {this.state.renderTimedErrMsg ? this.renderTimedErr() : null }
+        {this.state.renderTimedErrMsg ? this.renderErr() : null }
+        {this.state.renderUntimedErrMsg ? this.renderErr() : null }
         <button onClick={this.mountComp} disabled={this.state.mount}>Run Target</button>
         {this.state.mount ? <Table />: null }
         {this.state.mount ? <PieChart />: null }
