@@ -8,9 +8,7 @@ interface Istate {
     minimum: string, 
     maximum: string, 
     target: string
-  },
-  userInteraction: boolean, 
-  btnDisabled: boolean, 
+  }, 
   renderTimedErrMsg: boolean, 
   mount: boolean
 }
@@ -23,18 +21,15 @@ class Form extends Component<{}, Istate> {
         maximum: '', 
         target: ''
       },
-      userInteraction: false, // might not be needed
-      btnDisabled: false, // might not be needed
       renderTimedErrMsg: false, 
       mount: false 
     }
   }
 
-  private mountComp = () => this.setState({mount:true})
+  private mountComp = () => formFieldsValidator(this.state.formFields) ? this.setState({mount:true}) : console.log('no');
   private unmountComp = () => this.setState({mount:false})
 
   private onChange = (event:any):void => {
-    console.log(event.target.value, isNumValidator(event.target.value));
     switch ( isNumValidator(event.target.value) ) {
       case true:
         this.unmountComp()
@@ -79,7 +74,7 @@ class Form extends Component<{}, Istate> {
   }
 
   public render():JSX.Element {
-    // console.log(this.state);
+    console.log(this.state);
     return (
       <div>
         <h1>form</h1>
