@@ -7,41 +7,35 @@ interface Iprops {
 }
 
 interface Istate {
-    attempts: number[] 
+    attempts: number[], 
+    currRandNum: number[]
 }
 
 class Table extends Component<{formFields:Iprops}, Istate> {
-    
     constructor(props: any) {
         super(props) 
-        console.log('table: init state') //  1st - called once 
         this.state = {
-            attempts: [] 
+            attempts: [], 
+            currRandNum: [] // save recor
         }
     }
- 
-    private interval = ():any => { // 6th - called once 
-        console.log('interval called');
+
+    public componentDidMount() { 
         setInterval(() => this.appendTr(), 500);
     }
 
-    public componentDidMount() { // 5th called - once 
-        console.log('comp did mount');
-        this.interval()
-    }
     public componentWillUnmount() {
-        console.log('comp unmounted');
-        clearInterval(this.interval());
+        clearInterval(setInterval(() => this.appendTr(), 500));
     }
     
-    private appendTr = ():any => { // 4th - called again 
-        console.log('A2 called');
-        this.setState({ attempts: [...this.state.attempts, this.state.attempts.push(this.state.attempts.length)] })
+    private appendTr = ():void => { 
+        this.setState({ 
+            attempts: [...this.state.attempts, this.state.attempts.push(this.state.attempts.length)], 
+            // currRandNum: [...this.state.attempts, this.state.attempts.push(this.state.attempts.length)]
+         })
     }
 
-    private tableGenerator = ():JSX.Element => { // 3rd - called again 
-        console.log('A1 called');
-        
+    private tableGenerator = ():JSX.Element => { 
         let tableHeaders:string[] = ['Attempt#', 'Current Random Number', 'Target Number', 'Is Match']
         let table
         table = <table>
@@ -51,8 +45,15 @@ class Table extends Component<{formFields:Iprops}, Istate> {
                         return <th key={idx}>{th}</th>
                     })}
                 </tr>
-                {this.state.attempts.map( (num, idx) => {
-                    return <tr key={idx}><td>{num}</td></tr>
+                {this.state.attempts.map( (attemptNum, idx) => {
+                    return <tr key={idx}>
+                        <td>{attemptNum}</td>
+                        <td>{
+                            Math.floor( Math.random() * ( parseInt(this.props.formFields.maximum) + 1 ) )
+                        }</td>
+                        <td>{this.props.formFields.target}</td>
+                        <td>isMatch?</td>
+                    </tr>
                 })}
             </tbody>
         </table>
@@ -60,7 +61,6 @@ class Table extends Component<{formFields:Iprops}, Istate> {
     }
 
     render() {
-        console.log('comp render'); // 2nd - called again 
         return (
             <div>
                 {this.tableGenerator()}
