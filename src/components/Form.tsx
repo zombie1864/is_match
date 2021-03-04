@@ -78,7 +78,6 @@ class Form extends Component<{}, Istate> {
   }
 
   public render():JSX.Element {
-    console.log(this.state);
     return (
       <div>
         {this.state.renderTimedErrMsg ? this.renderErr() : null }
