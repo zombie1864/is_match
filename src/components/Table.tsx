@@ -21,18 +21,25 @@ class Table extends Component<{formFields:Iprops}, Istate> {
     }
 
     public componentDidMount() { 
-        setInterval(() => this.appendTr(), 500);
+        setInterval(() => this.saveRecords(), 500);
     }
 
     public componentWillUnmount() {
-        clearInterval(setInterval(() => this.appendTr(), 500));
+        clearInterval(setInterval(() => this.saveRecords()));
     }
     
-    private appendTr = ():void => { 
+    private saveRecords = ():void => { 
         this.setState({ 
             attempts: [...this.state.attempts, this.state.attempts.push(this.state.attempts.length)], 
-            // currRandNum: [...this.state.attempts, this.state.attempts.push(this.state.attempts.length)]
+            currRandNum: [
+                ...this.state.currRandNum, 
+                Math.floor( Math.random() * ( parseInt(this.props.formFields.maximum) + 1 ) ) 
+            ]
          })
+    }
+
+    private isMatch = (currRandNum:number, targetValue:number):string => {
+        return currRandNum === targetValue ? 'YES' : 'NO'
     }
 
     private tableGenerator = ():JSX.Element => { 
@@ -48,11 +55,9 @@ class Table extends Component<{formFields:Iprops}, Istate> {
                 {this.state.attempts.map( (attemptNum, idx) => {
                     return <tr key={idx}>
                         <td>{attemptNum}</td>
-                        <td>{
-                            Math.floor( Math.random() * ( parseInt(this.props.formFields.maximum) + 1 ) )
-                        }</td>
+                        <td>{this.state.currRandNum[idx]}</td>
                         <td>{this.props.formFields.target}</td>
-                        <td>isMatch?</td>
+                        <td>{this.isMatch(this.state.currRandNum[idx], parseInt(this.props.formFields.target))}</td>
                     </tr>
                 })}
             </tbody>
