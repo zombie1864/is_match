@@ -21,44 +21,50 @@ class Table extends Component<{formFields:Iprops}, Istate> {
             auxNum: []
         }
     }
-    private tick() { // 8th - called again 
+    private tick() { // 7th - called again - go back to render 
+        console.log('tick called');
+        // let { auxNum } = this.state 
+        // auxNum.push(auxNum.length)
         this.setState(state => ({
           attempts: state.attempts + 1
         }));
       }
-    private interval = ():any => { // 7th - called once 
-        console.log('7');
-        setInterval(() => this.tick(), 1000);
+    private interval = ():any => { // 6th - called once 
+        console.log('interval called');
+        
+        setInterval(() => this.appendTr(), 1000);
     }
 
-    public componentDidMount() { // 6th called - once 
+    public componentDidMount() { // 5th called - once 
         console.log('comp did mount');
         this.interval()
     }
     public componentWillUnmount() {
+        console.log('comp unmounted');
+        
         clearInterval(this.interval());
     }
+
+    public componentDidUpdate(prevProps:any, prevState:any) { // 8th - go to tick 
+        console.log('comp did update');
+    }
     
-    private appendTr = ():any => { // 5th - called again 
-        let append
-        append = <tr>
-            <td>{this.state.attempts}</td>
-        </tr>
-        return append
+    
+    private appendTr = ():any => { // 4th - called again 
+        console.log('A2 called');
+        this.setState({ auxNum: [...this.state.auxNum, this.state.auxNum.push(this.state.auxNum.length)] })
+        // let append
+        // append = <tr>
+        //     <td>{this.state.attempts}</td>
+        // </tr>
+        // return append
     }
 
-    appendChild = () => {
-        let { auxNum } = this.state;
-        auxNum.push(auxNum.length); // data.length is one more than actual length since array starts from 0.
-        // Every time you call append row it adds new element to this array. 
-        // You can also add objects here and use that to create row if you want.
-        this.setState({auxNum});
-    }
-
-    private tableGenerator = ():JSX.Element => { // 4th - called again 
+    private tableGenerator = ():JSX.Element => { // 3rd - called again 
+        console.log('A1 called');
+        
         let tableHeaders:string[] = ['Attempt#', 'Current Random Number', 'Target Number', 'Is Match']
         let table
-        
         table = <table>
             <tbody>
                 <tr>
@@ -67,9 +73,9 @@ class Table extends Component<{formFields:Iprops}, Istate> {
                     })}
                 </tr>
                 {/* {this.appendTr()} */}
-                {this.state.auxNum.map(id => (
-                    this.appendTr()
-                ))}
+                {this.state.auxNum.map( (num, idx) => {
+                    return <tr key={idx}><td>{num}</td></tr>
+                })}
             </tbody>
         </table>
         return table 
