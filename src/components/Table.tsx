@@ -7,8 +7,7 @@ interface Iprops {
 }
 
 interface Istate {
-    attempts: number, 
-    auxNum: number[]
+    attempts: number[] 
 }
 
 class Table extends Component<{formFields:Iprops}, Istate> {
@@ -17,22 +16,13 @@ class Table extends Component<{formFields:Iprops}, Istate> {
         super(props) 
         console.log('table: init state') //  1st - called once 
         this.state = {
-            attempts: 0, 
-            auxNum: []
+            attempts: [] 
         }
     }
-    private tick() { // 7th - called again - go back to render 
-        console.log('tick called');
-        // let { auxNum } = this.state 
-        // auxNum.push(auxNum.length)
-        this.setState(state => ({
-          attempts: state.attempts + 1
-        }));
-      }
+ 
     private interval = ():any => { // 6th - called once 
         console.log('interval called');
-        
-        setInterval(() => this.appendTr(), 1000);
+        setInterval(() => this.appendTr(), 500);
     }
 
     public componentDidMount() { // 5th called - once 
@@ -41,23 +31,12 @@ class Table extends Component<{formFields:Iprops}, Istate> {
     }
     public componentWillUnmount() {
         console.log('comp unmounted');
-        
         clearInterval(this.interval());
     }
-
-    public componentDidUpdate(prevProps:any, prevState:any) { // 8th - go to tick 
-        console.log('comp did update');
-    }
-    
     
     private appendTr = ():any => { // 4th - called again 
         console.log('A2 called');
-        this.setState({ auxNum: [...this.state.auxNum, this.state.auxNum.push(this.state.auxNum.length)] })
-        // let append
-        // append = <tr>
-        //     <td>{this.state.attempts}</td>
-        // </tr>
-        // return append
+        this.setState({ attempts: [...this.state.attempts, this.state.attempts.push(this.state.attempts.length)] })
     }
 
     private tableGenerator = ():JSX.Element => { // 3rd - called again 
@@ -72,8 +51,7 @@ class Table extends Component<{formFields:Iprops}, Istate> {
                         return <th key={idx}>{th}</th>
                     })}
                 </tr>
-                {/* {this.appendTr()} */}
-                {this.state.auxNum.map( (num, idx) => {
+                {this.state.attempts.map( (num, idx) => {
                     return <tr key={idx}><td>{num}</td></tr>
                 })}
             </tbody>
