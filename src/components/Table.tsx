@@ -19,16 +19,33 @@ class Table extends Component<{formFields:Iprops}, Istate> {
             attempts: 0 
         }
     }
-
+    private tick() {
+        this.setState(state => ({
+          attempts: state.attempts + 1
+        }));
+      }
+    private interval = ():boolean => {
+        setInterval(() => this.appendTr(), 1000);
+        return true
+    }
+    public componentDidMount() {
+        this.interval()
+    }
+    public componentWillUnmount() {
+        // clearInterval(this.interval);
+    }
+    
     private appendTr = ():any => {
-        setTimeout( () => {
-            this.setState( {attempts: 1} )
+        // setTimeout( () => {
+            // this.setState( {attempts: 1} )
+            console.log("i'm hit");
+            
             let append
             append = <tr>
-                <td>=0</td>
+                <td>{this.state.attempts}</td>
             </tr>
             return append
-        }, 500)  
+        // }, 500)  
     }
     private tableGenerator = ():JSX.Element => {
         let tableHeaders:string[] = ['Attempt#', 'Current Random Number', 'Target Number', 'Is Match']
@@ -41,7 +58,7 @@ class Table extends Component<{formFields:Iprops}, Istate> {
                         return <th key={idx}>{th}</th>
                     })}
                 </tr>
-                {this.appendTr()}
+                {this.interval() ? this.appendTr() : null}
             </tbody>
         </table>
         return table 
