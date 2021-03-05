@@ -39,7 +39,7 @@ class Table extends Component<{formFields:Iprops}, Istate> {
     
     private updateState = ():void => { 
         this.setState({ 
-            attempts: [...this.state.attempts, this.state.attempts.push(this.state.attempts.length)], 
+            attempts: [...this.state.attempts, this.state.attempts.push(this.state.attempts.length) -1], 
             currRandNum: [
                 ...this.state.currRandNum, 
                 Math.floor( Math.random() * ( parseInt(this.props.formFields.maximum) + 1 ) ) 
@@ -59,19 +59,27 @@ class Table extends Component<{formFields:Iprops}, Istate> {
     private tableGenerator = ():JSX.Element => { 
         let tableHeaders:string[] = ['Attempt#', 'Current Random Number', 'Target Number', 'Is Match']
         let table
-        table = <table>
-            <tbody>
-                <tr>
+        table = <table style={{borderCollapse:'collapse',
+        border:'1px solid #000000'}}>
+            <tbody style={{borderCollapse:'collapse',
+        border:'1px solid #000000'}}>
+                <tr style={{borderCollapse:'collapse',
+        border:'1px solid #000000'}}>
                     {tableHeaders.map( (th, idx) => {
-                        return <th key={idx}>{th}</th>
+                        return <th key={idx} style={{borderCollapse:'collapse',
+                        border:'1px solid #000000'}}>{th}</th>
                     })}
 
                 </tr>
                 {this.state.attempts.map( (attemptNum, idx) => {
-                    return <tr key={idx}>
-                        <td>{attemptNum}</td>
-                        <td>{this.state.currRandNum[idx]}</td>
-                        <td>{this.props.formFields.target}</td>
+                    return <tr key={idx} style={{borderCollapse:'collapse',
+                    border:'1px solid #000000'}}>
+                        <td style={{borderCollapse:'collapse',
+        border:'1px solid #000000'}}>{attemptNum}</td>
+                        <td style={{borderCollapse:'collapse',
+        border:'1px solid #000000'}}>{this.state.currRandNum[idx]}</td>
+                        <td style={{borderCollapse:'collapse',
+        border:'1px solid #000000'}}>{this.props.formFields.target}</td>
                         <td>{this.isMatch(this.state.currRandNum[idx], parseInt(this.props.formFields.target))}</td>
                     </tr>
                 })}
