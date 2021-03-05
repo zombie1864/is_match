@@ -83,6 +83,7 @@ class Form extends Component<{}, Istate> {
         {this.state.renderTimedErrMsg ? this.renderErr() : null }
         {this.state.renderUntimedErrMsg ? this.renderErr() : null }
         {this.formFunc()}
+        {/* {this.state.mount ? <Table formFields={this.state.formFields}/>: 'No Data' } */}
         <table>
           <tbody>
             <tr>
