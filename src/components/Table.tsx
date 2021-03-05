@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-// import PieChart from './PieChart'
+import PieChart from './PieChart'
 
 interface Iprops {
     minimum: string, 
@@ -67,6 +67,7 @@ class Table extends Component<{formFields:Iprops}, Istate> {
                     {tableHeaders.map( (th, idx) => {
                         return <th key={idx}>{th}</th>
                     })}
+
                 </tr>
                 {this.state.attempts.map( (attemptNum, idx) => {
                     return <tr key={idx}>
@@ -77,6 +78,7 @@ class Table extends Component<{formFields:Iprops}, Istate> {
                     </tr>
                 })}
             </tbody>
+            {/* <PieChart isMatch={this.state.isMatch}/> */}
         </table>
         return table 
     }
@@ -87,7 +89,7 @@ class Table extends Component<{formFields:Iprops}, Istate> {
         return (
             <div>
                 {this.tableGenerator()}
-                {/* <PieChart isMatch={this.state.isMatch}/> */}
+                <PieChart isMatch={this.state.isMatch}/>
             </div>
         )
     }
