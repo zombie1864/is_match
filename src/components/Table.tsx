@@ -30,7 +30,7 @@ class Table extends Component<{formFields:Iprops}, Istate> {
     }
 
     public componentDidMount() { 
-        setInterval(() => this.updateState(), 2500);
+        setInterval(() => this.updateState(), 500);
     }
 
     public componentWillUnmount() {
@@ -38,7 +38,6 @@ class Table extends Component<{formFields:Iprops}, Istate> {
     }
     
     private updateState = ():void => { 
-        // console.log('updateState is third')
         this.setState({ 
             attempts: [...this.state.attempts, this.state.attempts.push(this.state.attempts.length)], 
             currRandNum: [
@@ -58,7 +57,6 @@ class Table extends Component<{formFields:Iprops}, Istate> {
     }
 
     private tableGenerator = ():JSX.Element => { 
-        // console.log('tableGenerator is first');
         let tableHeaders:string[] = ['Attempt#', 'Current Random Number', 'Target Number', 'Is Match']
         let table
         table = <table>
@@ -78,18 +76,34 @@ class Table extends Component<{formFields:Iprops}, Istate> {
                     </tr>
                 })}
             </tbody>
-            {/* <PieChart isMatch={this.state.isMatch}/> */}
         </table>
         return table 
     }
 
+    private pieCss = () => {
+        return {
+            color: 'red',
+            display: 'inline-block'
+        }
+    }
+    private tableCss = () => {
+        return {
+            display: 'inline-block',
+            overflowY: 'scroll', 
+            width: '55%',
+            height: '800px'
+        } as React.CSSProperties
+    }
+
     render() {
-        // console.log(this.state);
-        
         return (
             <div>
+                <div style={this.tableCss()}>
                 {this.tableGenerator()}
+                </div>
+                <div style={this.pieCss()}>
                 <PieChart isMatch={this.state.isMatch}/>
+                </div>
             </div>
         )
     }
