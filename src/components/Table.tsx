@@ -59,28 +59,20 @@ class Table extends Component<{formFields:Iprops}, Istate> {
     private tableGenerator = ():JSX.Element => { 
         let tableHeaders:string[] = ['Attempt#', 'Current Random Number', 'Target Number', 'Is Match']
         let table
-        table = <table style={{borderCollapse:'collapse',
-        border:'1px solid #000000'}}>
-            <tbody style={{borderCollapse:'collapse',
-        border:'1px solid #000000'}}>
-                <tr style={{borderCollapse:'collapse',
-        border:'1px solid #000000'}}>
+        table = <table style={this.tableCss()}>
+            <tbody style={this.tableCss()}>
+                <tr style={this.tableCss()}>
                     {tableHeaders.map( (th, idx) => {
-                        return <th key={idx} style={{borderCollapse:'collapse',
-                        border:'1px solid #000000'}}>{th}</th>
+                        return <th key={idx} style={this.tableCss()}>{th}</th>
                     })}
 
                 </tr>
                 {this.state.attempts.map( (attemptNum, idx) => {
-                    return <tr key={idx} style={{borderCollapse:'collapse',
-                    border:'1px solid #000000'}}>
-                        <td style={{borderCollapse:'collapse',
-        border:'1px solid #000000'}}>{attemptNum}</td>
-                        <td style={{borderCollapse:'collapse',
-        border:'1px solid #000000'}}>{this.state.currRandNum[idx]}</td>
-                        <td style={{borderCollapse:'collapse',
-        border:'1px solid #000000'}}>{this.props.formFields.target}</td>
-                        <td>{this.isMatch(this.state.currRandNum[idx], parseInt(this.props.formFields.target))}</td>
+                    return <tr key={idx} style={this.tableCss()}>
+                        <td style={this.tableCss()}>{attemptNum}</td>
+                        <td style={this.tableCss()}>{this.state.currRandNum[idx]}</td>
+                        <td style={this.tableCss()}>{this.props.formFields.target}</td>
+                        <td style={this.tableCss()}>{this.isMatch(this.state.currRandNum[idx], parseInt(this.props.formFields.target))}</td>
                     </tr>
                 })}
             </tbody>
@@ -88,29 +80,37 @@ class Table extends Component<{formFields:Iprops}, Istate> {
         return table 
     }
 
-    private pieCss = () => {
+    private pieCss = ():React.CSSProperties => {
         return {
             color: 'red',
             display: 'inline-block'
         }
     }
-    private tableCss = () => {
+    
+    private tableCss = ():React.CSSProperties => {
+        return {
+            borderCollapse:'collapse',
+            border:'1px solid #000000'
+        } 
+    }
+
+    private tableContainerCss = ():React.CSSProperties => {
         return {
             display: 'inline-block',
             overflowY: 'scroll', 
             width: '55%',
             height: '800px'
-        } as React.CSSProperties
+        }
     }
 
     render() {
         return (
             <div>
-                <div style={this.tableCss()}>
-                {this.tableGenerator()}
+                <div style={this.tableContainerCss()}>
+                    {this.tableGenerator()}
                 </div>
                 <div style={this.pieCss()}>
-                <PieChart isMatch={this.state.isMatch}/>
+                    <PieChart isMatch={this.state.isMatch}/>
                 </div>
             </div>
         )
