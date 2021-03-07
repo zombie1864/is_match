@@ -83,10 +83,13 @@ class Table extends Component<{formFields:Iprops}, Istate> {
     private pieCss = ():React.CSSProperties => {
         return {
             color: 'red',
-            display: 'inline-block'
+            display: 'inline-block',
+            position:'relative' ,
+            left:'100px',
+            top: '-500px'
         }
     }
-    
+
     private tableCss = ():React.CSSProperties => {
         return {
             borderCollapse:'collapse',
