@@ -79,8 +79,8 @@ class Form extends Component<{}, Istate> {
   public render():JSX.Element {
     return (
       <div>
-        {this.state.renderTimedErrMsg ? this.renderErr() : null }
-        {this.state.renderUntimedErrMsg ? this.renderErr() : null }
+        {this.state.renderTimedErrMsg ? this.renderErr() : 
+        this.state.renderUntimedErrMsg ? this.renderErr() : null}
         {this.formFunc()}
         {this.state.mount ? <Table formFields={this.state.formFields}/> : 'No Data' }
       </div>
