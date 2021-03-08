@@ -30,7 +30,7 @@ class Table extends Component<{formFields:Iprops}, Istate> {
     }
 
     public componentDidMount() { 
-        setInterval(() => this.updateState(), 500);
+        setInterval(() => this.updateState(), 5500);
     }
 
     public componentWillUnmount() {

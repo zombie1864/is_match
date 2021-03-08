@@ -7,12 +7,18 @@ interface Iprops {
 }
 
 const PieChartComp = (props: Iprops) => {
-    const COLORS = ["#FF0000", "#0088FE"]; //NOs - red, YESs - blue 
-    const RADIAN = Math.PI / 180;
-    function renderCustomizedLabel({cx,cy,midAngle,innerRadius,outerRadius}: any) {
+    const COLORS = ["#0088FE", "#FF0000"]; 
+    const data = [
+        { value: props.isMatch.YESs },
+        { value: props.isMatch.NOs },
+    ];
+
+    function renderCustomizedLabel({cx,cy,midAngle,innerRadius,outerRadius, index}: any) {
+        const RADIAN = Math.PI / 180;
         const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
         const x = cx + radius * Math.cos(-midAngle * RADIAN);
         const y = cy + radius * Math.sin(-midAngle * RADIAN);
+        const dataEntries = Object.entries(props.isMatch) // [[key, value],...,[key, value]]
 
         return (
             <text
@@ -22,16 +28,11 @@ const PieChartComp = (props: Iprops) => {
             textAnchor={x > cx ? "start" : "end"}
             dominantBaseline="central"
             >
-            YES:{`${data[1].value}`}
-            NOs:{`${data[0].value}`}
+                {dataEntries[index][0]}: {dataEntries[index][1]}
             </text>
         );
     };
 
-    const data = [
-        { value: props.isMatch.NOs },
-        { value: props.isMatch.YESs },
-      ];
     return (
         <div>
             <PieChart width={400} height={400}>
@@ -49,9 +50,8 @@ const PieChartComp = (props: Iprops) => {
                 ))}
               </Pie>
             </PieChart>
-            {/* {renderCustomizedLabel()} */}
         </div>
-      );
+    );
 }
 
 export default PieChartComp
