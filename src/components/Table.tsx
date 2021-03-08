@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import PieChart from './PieChart'
+import PieChartComp from './PieChart'
 
 interface Iprops {
     minimum: string, 
@@ -85,8 +85,8 @@ class Table extends Component<{formFields:Iprops}, Istate> {
             color: 'red',
             display: 'inline-block',
             position:'relative' ,
-            left:'100px',
-            top: '-500px'
+            left:'25px',
+            top: '-400px'
         }
     }
 
@@ -113,7 +113,7 @@ class Table extends Component<{formFields:Iprops}, Istate> {
                     {this.tableGenerator()}
                 </div>
                 <div style={this.pieCss()}>
-                    <PieChart isMatch={this.state.isMatch}/>
+                    <PieChartComp isMatch={this.state.isMatch}/>
                 </div>
             </div>
         )
