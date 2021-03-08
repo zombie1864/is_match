@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Table from './Table'
-import PieChart from './PieChart'
 import { isNumValidator, formFieldsValidator } from './validators'
 
 interface Istate {
@@ -78,24 +77,12 @@ class Form extends Component<{}, Istate> {
   }
 
   public render():JSX.Element {
-    console.log(this.state);
     return (
       <div>
-        {this.state.renderTimedErrMsg ? this.renderErr() : null }
-        {this.state.renderUntimedErrMsg ? this.renderErr() : null }
+        {this.state.renderTimedErrMsg ? this.renderErr() : 
+        this.state.renderUntimedErrMsg ? this.renderErr() : null}
         {this.formFunc()}
-        <table>
-          <tbody>
-            <tr>
-              <th style={ {border: '1px solid black'} }>
-                {this.state.mount ? <Table />: 'No Data' }
-              </th>
-              <th style={ {border: '1px solid black'} }>
-                {this.state.mount ? <PieChart />: null }
-              </th>
-            </tr>
-          </tbody>
-        </table>
+        {this.state.mount ? <Table formFields={this.state.formFields}/> : 'No Data' }
       </div>
     )
   }
