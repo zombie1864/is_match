@@ -18,7 +18,7 @@ const PieChartComp = (props: Iprops) => {
         const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
         const x = cx + radius * Math.cos(-midAngle * RADIAN);
         const y = cy + radius * Math.sin(-midAngle * RADIAN);
-        const dataEntries = Object.entries(props.isMatch) // [[key, value],...,[key, value]]
+        const dataEntries = Object.entries(props.isMatch) 
 
         return (
             <text
@@ -33,6 +33,7 @@ const PieChartComp = (props: Iprops) => {
         );
     };
 
+    console.log('render')
     return (
         <div>
             <PieChart width={400} height={400}>
@@ -46,7 +47,7 @@ const PieChartComp = (props: Iprops) => {
                 dataKey="value"
               >
                 {data.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
             </PieChart>

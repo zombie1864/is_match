@@ -30,7 +30,7 @@ class Table extends Component<{formFields:Iprops}, Istate> {
     }
 
     public componentDidMount() { 
-        setInterval(() => this.updateState(), 5500);
+        setInterval(() => this.updateState(), 4500);
     }
 
     public componentWillUnmount() {
@@ -44,12 +44,12 @@ class Table extends Component<{formFields:Iprops}, Istate> {
                 ...this.state.currRandNum, 
                 Math.floor( Math.random() * ( parseInt(this.props.formFields.maximum) + 1 ) ) 
             ]
-        })
-        if ( parseInt(this.props.formFields.target) === this.state.currRandNum[this.state.currRandNum.length - 1] ) {
+        }, ()  => {
+            if ( parseInt(this.props.formFields.target) === this.state.currRandNum[this.state.currRandNum.length - 1] ) {
             this.setState( { isMatch: { ...this.state.isMatch, YESs: this.state.isMatch.YESs + 1} })
         } else {
             this.setState( { isMatch: { ...this.state.isMatch, NOs: this.state.isMatch.NOs + 1} })
-        }
+        }})
     }
     
     private isMatch = (currRandNum:number, targetValue:number):string => {
