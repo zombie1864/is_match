@@ -1,57 +1,57 @@
-import { PieChart, Pie, Cell } from "recharts";
+import React, { Component } from "react";
+import {Pie} from 'react-chartjs-2'
+import 'chartjs-plugin-labels'
+
 interface Iprops {
-    isMatch: {
+    // isMatch: {
         YESs: number, 
         NOs: number 
-    }
+    // }
 }
 
-const PieChartComp = (props: Iprops) => {
-    const COLORS = ["#0088FE", "#FF0000"]; 
-    const data = [
-        { value: props.isMatch.YESs },
-        { value: props.isMatch.NOs },
-    ];
-
-    function renderCustomizedLabel({cx,cy,midAngle,innerRadius,outerRadius, index}: any) {
-        const RADIAN = Math.PI / 180;
-        const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-        const x = cx + radius * Math.cos(-midAngle * RADIAN);
-        const y = cy + radius * Math.sin(-midAngle * RADIAN);
-        const dataEntries = Object.entries(props.isMatch) 
-
+class PieChartComp extends Component<{isMatch:Iprops}> {
+    render() {
         return (
-            <text
-            x={x}
-            y={y}
-            fill="black"
-            textAnchor={x > cx ? "start" : "end"}
-            dominantBaseline="central"
-            >
-                {dataEntries[index][0]}: {dataEntries[index][1]}
-            </text>
-        );
-    };
-
-    return (
-        <div>
-            <PieChart width={400} height={400}>
-              <Pie
-                data={data}
-                cx={200}
-                cy={200}
-                labelLine={false}
-                label={renderCustomizedLabel}
-                outerRadius={150}
-                dataKey="value"
-              >
-                {data.map((entry, index) => (
-                    <Cell key={index} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-            </PieChart>
-        </div>
-    );
+            <div>
+                <Pie
+                    data={{
+                    labels: [`NOs: ${this.props.isMatch.NOs}`, `YESs: ${this.props.isMatch.YESs}`],
+                    datasets: [
+                        {
+                        data: [this.props.isMatch.NOs, this.props.isMatch.YESs],
+                        backgroundColor: [
+                            '#FF0000',
+                            'rgba(54, 162, 235)',
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                        ],
+                        },
+                    ]}}
+                    height={400}
+                    width={600}
+                    options={{
+                        plugins: {
+                                labels: {
+                                    render: 'label',
+                                    color:'black',
+                                    fontSize: 25,
+                                    fontColor: '#000000',
+                                    fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
+                                },
+                        },
+                        legend: {
+                            display: true,
+                            labels: {
+                            fontSize: 25,
+                            },
+                        },
+                    }}
+                />
+            </div>
+        )
+    }
 }
 
 export default PieChartComp
