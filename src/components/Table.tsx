@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import PieChart from './PieChart'
+import PieChartComp from './PieChart'
 
 interface Iprops {
     minimum: string, 
@@ -44,12 +44,12 @@ class Table extends Component<{formFields:Iprops}, Istate> {
                 ...this.state.currRandNum, 
                 Math.floor( Math.random() * ( parseInt(this.props.formFields.maximum) + 1 ) ) 
             ]
-        })
-        if ( parseInt(this.props.formFields.target) === this.state.currRandNum[this.state.currRandNum.length - 1] ) {
+        }, ()  => {
+            if ( parseInt(this.props.formFields.target) === this.state.currRandNum[this.state.currRandNum.length - 1] ) {
             this.setState( { isMatch: { ...this.state.isMatch, YESs: this.state.isMatch.YESs + 1} })
         } else {
             this.setState( { isMatch: { ...this.state.isMatch, NOs: this.state.isMatch.NOs + 1} })
-        }
+        }})
     }
     
     private isMatch = (currRandNum:number, targetValue:number):string => {
@@ -60,15 +60,14 @@ class Table extends Component<{formFields:Iprops}, Istate> {
         let tableHeaders:string[] = ['Attempt#', 'Current Random Number', 'Target Number', 'Is Match']
         let table
         table = <table style={this.tableCss()}>
-            <tbody style={this.tableCss()}>
-                <tr style={this.tableCss()}>
+            <tbody>
+                <tr>
                     {tableHeaders.map( (th, idx) => {
                         return <th key={idx} style={this.tableCss()}>{th}</th>
                     })}
-
                 </tr>
                 {this.state.attempts.map( (attemptNum, idx) => {
-                    return <tr key={idx} style={this.tableCss()}>
+                    return <tr key={idx} >
                         <td style={this.tableCss()}>{attemptNum}</td>
                         <td style={this.tableCss()}>{this.state.currRandNum[idx]}</td>
                         <td style={this.tableCss()}>{this.props.formFields.target}</td>
@@ -85,15 +84,16 @@ class Table extends Component<{formFields:Iprops}, Istate> {
             color: 'red',
             display: 'inline-block',
             position:'relative' ,
-            left:'100px',
-            top: '-500px'
+            left:'25px',
+            top: '-400px'
         }
     }
 
     private tableCss = ():React.CSSProperties => {
         return {
             borderCollapse:'collapse',
-            border:'1px solid #000000'
+            border:'1px solid #000000',  
+            padding:'0 50px'
         } 
     }
 
@@ -101,7 +101,7 @@ class Table extends Component<{formFields:Iprops}, Istate> {
         return {
             display: 'inline-block',
             overflowY: 'scroll', 
-            width: '55%',
+            width: '50%',
             height: '800px'
         }
     }
@@ -113,7 +113,7 @@ class Table extends Component<{formFields:Iprops}, Istate> {
                     {this.tableGenerator()}
                 </div>
                 <div style={this.pieCss()}>
-                    <PieChart isMatch={this.state.isMatch}/>
+                    <PieChartComp isMatch={this.state.isMatch}/>
                 </div>
             </div>
         )
