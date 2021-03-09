@@ -33,7 +33,6 @@ const PieChartComp = (props: Iprops) => {
         );
     };
 
-    console.log('render')
     return (
         <div>
             <PieChart width={400} height={400}>
@@ -47,7 +46,7 @@ const PieChartComp = (props: Iprops) => {
                 dataKey="value"
               >
                 {data.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    <Cell key={index} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
             </PieChart>

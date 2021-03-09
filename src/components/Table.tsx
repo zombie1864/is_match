@@ -30,7 +30,7 @@ class Table extends Component<{formFields:Iprops}, Istate> {
     }
 
     public componentDidMount() { 
-        setInterval(() => this.updateState(), 4500);
+        setInterval(() => this.updateState(), 2500);
     }
 
     public componentWillUnmount() {
@@ -60,15 +60,14 @@ class Table extends Component<{formFields:Iprops}, Istate> {
         let tableHeaders:string[] = ['Attempt#', 'Current Random Number', 'Target Number', 'Is Match']
         let table
         table = <table style={this.tableCss()}>
-            <tbody style={this.tableCss()}>
-                <tr style={this.tableCss()}>
+            <tbody>
+                <tr>
                     {tableHeaders.map( (th, idx) => {
                         return <th key={idx} style={this.tableCss()}>{th}</th>
                     })}
-
                 </tr>
                 {this.state.attempts.map( (attemptNum, idx) => {
-                    return <tr key={idx} style={this.tableCss()}>
+                    return <tr key={idx} >
                         <td style={this.tableCss()}>{attemptNum}</td>
                         <td style={this.tableCss()}>{this.state.currRandNum[idx]}</td>
                         <td style={this.tableCss()}>{this.props.formFields.target}</td>
@@ -93,7 +92,8 @@ class Table extends Component<{formFields:Iprops}, Istate> {
     private tableCss = ():React.CSSProperties => {
         return {
             borderCollapse:'collapse',
-            border:'1px solid #000000'
+            border:'1px solid #000000',  
+            padding:'0 50px'
         } 
     }
 
@@ -101,7 +101,7 @@ class Table extends Component<{formFields:Iprops}, Istate> {
         return {
             display: 'inline-block',
             overflowY: 'scroll', 
-            width: '55%',
+            width: '50%',
             height: '800px'
         }
     }
