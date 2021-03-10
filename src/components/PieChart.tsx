@@ -32,6 +32,7 @@ class PieChartComp extends Component<{isMatch:Iprops}> {
                     height={400}
                     width={600}
                     options={{
+                        events: [], // disables hover effect 
                         plugins: {
                                 labels: {
                                     render: 'label',
