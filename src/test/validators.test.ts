@@ -1,4 +1,4 @@
-import { isNumValidator, formFieldsValidator } from './validators'
+import { isNumValidator, formFieldsValidator } from '../validators/validators'
 
 test('isNumValidator should return true for inputs of type number, false for other types', async () => {
     expect(isNumValidator('8')).toBe(true)

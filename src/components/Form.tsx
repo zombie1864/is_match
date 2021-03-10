@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Table from './Table'
-import { isNumValidator, formFieldsValidator } from './validators'
+import { isNumValidator, formFieldsValidator } from '../validators/validators'
 
 interface Istate {
   formFields: {
