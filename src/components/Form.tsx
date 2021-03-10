@@ -10,7 +10,7 @@ interface Istate {
   }, 
   renderTimedErrMsg: boolean, 
   renderUntimedErrMsg: boolean, 
-  mount: boolean
+  inject: boolean
 }
 
 interface formFields {
@@ -30,24 +30,24 @@ class Form extends Component<{}, Istate> {
       },
       renderTimedErrMsg: false, 
       renderUntimedErrMsg: false, 
-      mount: false 
+      inject: false 
     }
   }
 
-  private mountComp = () => formFieldsValidator(this.state.formFields) ? this.setState({mount:true}) : this.setState({renderUntimedErrMsg:true});
-  private unmountComp = () => this.setState({mount:false})
+  private mountComp = () => formFieldsValidator(this.state.formFields) ? this.setState({inject:true}) : this.setState({renderUntimedErrMsg:true});
 
   private onChange = (event:any):void => {
     switch ( isNumValidator(event.target.value) ) {
       case true:
-        this.unmountComp()
-        this.setState({ renderUntimedErrMsg: false })
-        const newState = { formFields: { ...this.state.formFields, [event.target.name]: (event.target.value) } } as Istate; 
+        const newState = { 
+          renderUntimedErrMsg: false, 
+          formFields: { ...this.state.formFields, [event.target.name]: (event.target.value) },
+          inject: false
+        } as Istate; 
         this.setState( newState )
         break;
       default:
-        this.unmountComp()
-        this.setState( { renderTimedErrMsg: true } )
+        this.setState( { renderTimedErrMsg: true, inject: false } )
         break;
     }
   }
@@ -78,7 +78,7 @@ class Form extends Component<{}, Istate> {
                 <input type="text" placeholder='0' onChange={this.onChange} name={formField} value={ this.state.formFields[formField as keyof formFields] }/>
               </label>
           })}
-          <button type="button" onClick={this.mountComp} disabled={this.state.mount}>Run Target</button>
+          <button type="button" onClick={this.mountComp} disabled={this.state.inject}>Run Target</button>
         </form>
       </div>
     return formContainer
@@ -90,7 +90,7 @@ class Form extends Component<{}, Istate> {
         {this.state.renderTimedErrMsg ? this.renderErr() : 
         this.state.renderUntimedErrMsg ? this.renderErr() : null}
         {this.formFunc()}
-        {this.state.mount ? <Table formFields={this.state.formFields}/> : 'No Data' }
+        {this.state.inject ? <Table formFields={this.state.formFields}/> : 'No Data' } {/*this is called flagging*/}
       </div>
     )
   }
