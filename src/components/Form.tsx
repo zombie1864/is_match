@@ -12,6 +12,13 @@ interface Istate {
   renderUntimedErrMsg: boolean, 
   mount: boolean
 }
+
+interface formFields {
+  minimum: string, 
+  maximum: string, 
+  target: string
+}
+
 class Form extends Component<{}, Istate> {
   constructor(props: any) {
     super(props) 
@@ -35,7 +42,7 @@ class Form extends Component<{}, Istate> {
       case true:
         this.unmountComp()
         this.setState({ renderUntimedErrMsg: false })
-        const newState = { formFields: { ...this.state.formFields, [event.target.name]: (event.target.value) } } as Istate; // look into why the spreed op works 
+        const newState = { formFields: { ...this.state.formFields, [event.target.name]: (event.target.value) } } as Istate; 
         this.setState( newState )
         break;
       default:
@@ -44,6 +51,7 @@ class Form extends Component<{}, Istate> {
         break;
     }
   }
+  
   private renderErr = ():any => {
     return <p>Please type a number</p>
   }
@@ -58,7 +66,7 @@ class Form extends Component<{}, Istate> {
     return prevState.renderTimedErrMsg !== this.state.renderTimedErrMsg ? this.setTimer() : null
   }
 
-  private formFunc = ():any => { // the value={ ... } not modular enough do research into this 
+  private formFunc = ():any => { 
     let formContainer
     let formFields = Object.keys(this.state.formFields) // arrOfKeys 
     formContainer = 
@@ -67,7 +75,7 @@ class Form extends Component<{}, Istate> {
           {formFields.map( (formField, idx) => {
             return <label key={idx}>
                 {formField[0].toUpperCase() + formField.slice(1)}: 
-                <input type="text" placeholder='0' onChange={this.onChange} name={formField} value={ idx === 0 ? this.state.formFields.minimum : idx === 1 ? this.state.formFields.maximum : this.state.formFields.target }/>
+                <input type="text" placeholder='0' onChange={this.onChange} name={formField} value={ this.state.formFields[formField as keyof formFields] }/>
               </label>
           })}
           <button type="button" onClick={this.mountComp} disabled={this.state.mount}>Run Target</button>

@@ -42,7 +42,7 @@ class PieChartComp extends Component<{isMatch:Iprops}> {
                                 },
                         },
                         legend: {
-                            display: true,
+                            display: false,
                             labels: {
                             fontSize: 25,
                             },

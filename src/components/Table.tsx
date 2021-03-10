@@ -17,6 +17,7 @@ interface Istate {
 }
 
 class Table extends Component<{formFields:Iprops}, Istate> {
+    interval: any; // required for cdm and cwu 
     constructor(props: any) {
         super(props) 
         this.state = {
@@ -30,19 +31,21 @@ class Table extends Component<{formFields:Iprops}, Istate> {
     }
 
     public componentDidMount() { 
-        setInterval(() => this.updateState(), 500);
+        this.interval = setInterval(() => this.updateState(), 500);
     }
 
     public componentWillUnmount() {
-        clearInterval(setInterval(() => this.updateState()));
+        clearInterval(this.interval);
     }
-    
+
     private updateState = ():void => { 
         this.setState({ 
             attempts: [...this.state.attempts, this.state.attempts.push(this.state.attempts.length) -1], 
             currRandNum: [
                 ...this.state.currRandNum, 
-                Math.floor( Math.random() * ( parseInt(this.props.formFields.maximum) + 1 ) ) 
+                Math.floor( Math.random() * ( 
+                    parseInt(this.props.formFields.maximum)  - parseInt(this.props.formFields.minimum) + 1 
+                ) ) + parseInt(this.props.formFields.minimum) 
             ]
         }, ()  => {
             if ( parseInt(this.props.formFields.target) === this.state.currRandNum[this.state.currRandNum.length - 1] ) {
@@ -85,7 +88,7 @@ class Table extends Component<{formFields:Iprops}, Istate> {
             display: 'inline-block',
             position:'relative' ,
             left:'25px',
-            top: '-400px'
+            top: '-100px'
         }
     }
 
@@ -102,7 +105,7 @@ class Table extends Component<{formFields:Iprops}, Istate> {
             display: 'inline-block',
             overflowY: 'scroll', 
             width: '50%',
-            height: '800px'
+            height: '80vh'
         }
     }
 
