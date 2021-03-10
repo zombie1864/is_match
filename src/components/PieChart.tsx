@@ -15,7 +15,7 @@ class PieChartComp extends Component<{isMatch:Iprops}> {
             <div>
                 <Pie
                     data={{
-                    labels: ['NOs', 'YESs'],
+                    labels: [`NOs: ${this.props.isMatch.NOs}`, `YESs: ${this.props.isMatch.YESs}`],
                     datasets: [
                         {
                         data: [this.props.isMatch.NOs, this.props.isMatch.YESs],
