@@ -13,11 +13,11 @@ interface Istate {
     isMatch: {
         YESs: number, 
         NOs: number 
-    }
+    },
+    interval: any
 }
 
 class Table extends Component<{formFields:Iprops}, Istate> {
-    interval: any; // required for cdm and cwu 
     constructor(props: any) {
         super(props) 
         this.state = {
@@ -26,16 +26,17 @@ class Table extends Component<{formFields:Iprops}, Istate> {
             isMatch: {
                 YESs: 0, 
                 NOs: 0
-            }
+            },
+            interval: null 
         }
     }
 
     public componentDidMount() { 
-        this.interval = setInterval(() => this.updateState(), 500);
+        this.setState({interval: setInterval(() => this.updateState(), 500)})
     }
 
     public componentWillUnmount() {
-        clearInterval(this.interval);
+        clearInterval(this.state.interval);
     }
 
     private updateState = ():void => { 
@@ -88,7 +89,7 @@ class Table extends Component<{formFields:Iprops}, Istate> {
             display: 'inline-block',
             position:'relative' ,
             left:'25px',
-            top: '-100px'
+            top: '-20vh'
         }
     }
 
